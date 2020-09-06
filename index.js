@@ -161,20 +161,12 @@ client.on('message', async (message) => {
 
         if (guilds[message.guild.id].premium == "0") {
 
-            let Category = await message.guild.channels.create('📈 Üye Sayacı 📉', { type: 'category', reason: "Üye sayacı adlı kanal, setup komuduyla kurulmuştur!"})
+            let Category = await message.guild.channels.create('📈 Üye Sayacı 📉', { type: 'category', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }, { id: client.user.id, allow: ['MANAGE_CHANNELS']}], reason: "Üye sayacı adlı kanal, setup komuduyla kurulmuştur!"})
             guilds[message.guild.id].channels.stats_category_id = Category.id;
             Category.setPosition(0)
 
             if (guilds[message.guild.id].stats.member_count) {             
                 let member_count = await message.guild.channels.create('Kişi Sayısı: ' + message.guild.memberCount, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }, { id: client.user.id, allow: ['MANAGE_CHANNELS'] }], reason: "Kişi sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
-                await member_count.createOverwrite(client.user.id, {
-                    'VIEW_CHANNEL': true,
-                    'MANAGE_CHANNELS': true
-                });
-                member_count.createOverwrite(message.guild.id, {
-                    'VIEW_CHANNEL': true,
-                    'CONNECT': false
-                });
                 member_count.setParent(Category.id);
                 guilds[message.guild.id].channels.member_count_channel_id = member_count.id;
             }
@@ -206,7 +198,7 @@ client.on('message', async (message) => {
             guilds[message.guild.id].counter = true;
 
             fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });
-            message.reply("\n:white_check_mark: Setup başarıyla oluşturuldu!")
+            message.reply("\n:white_check_mark: Setup başarıyla oluşturuldu! \nHer 10 dakikada bir kanallar güncellenecektir!")
 
         };
     };
@@ -244,6 +236,11 @@ client.on('message', async (message) => {
             message.reply("\n:grey_question: Belirtilen argümanla alakalı komut bulunamadı!");
         }
     };
+
+    if (command == "nasıl" || command == "nasil") {
+        let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
+        message.reply(`\n:grey_question: **${guilds[message.guild.id].prefix}setup** komudu ile setup yapın.\nİşlem bittikten sonra oluşan kanalları **istediğiniz gibi** düzenleyebilirsiniz.\nLütfen kanal isimlerine **sayaç sayısı harici sayı koymayın!**\nBot, otomatik olarak sayıları o kanalda bulunan sayaç sayısına çevirir.\nEğer içinde sayılmasını istemediğiniz bir şey varsa, kanalı silebilirsiniz. (Yanlışlıkla kanalı silerseniz tüm sayaç kanallarını silip tekrardan setup yapın!)`)
+    }
 
 });
 
