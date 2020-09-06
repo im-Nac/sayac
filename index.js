@@ -8,7 +8,9 @@ client.on('ready', async () => {
 
     console.log("ready")
 
+    setInterval(async () => {
     client.user.setPresence({ activity: { name: 'sayaç - ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
+    }, 1000 * 20);
 
     // Renaming session
     setInterval(async () => {
@@ -62,7 +64,7 @@ client.on('ready', async () => {
                 }; 
             };
         });
-    }, 1000 * 60 * 5);
+    }, 1000 * 60 * 10);
 
     // Checking if any problem occured in config files
     setInterval(async () => {
@@ -100,6 +102,7 @@ client.on('ready', async () => {
 client.on('guildCreate', async (guild) => {
 
     const guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"))
+    console.log("New guild!")
 
     if (!guilds[guild.id]) {
         guilds[guild.id] = {
@@ -132,7 +135,7 @@ client.on('message', async (message) => {
     const gds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
     const args = message.content.slice(gds[message.guild.id].prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if (!message.content.startsWith(gds[message.guild.id].prefix) || message.author.bot) return;
+    if (!message.content.startsWith(gds[message.guild.id].prefix) || message.author.bot || message.channel.type == "dm") return;
 
     if (command === "prefix") {
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
@@ -240,11 +243,16 @@ client.on('message', async (message) => {
     if (command == "nasıl" || command == "nasil") {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         message.reply(`\n:grey_question: **${guilds[message.guild.id].prefix}setup** komudu ile setup yapın.\nİşlem bittikten sonra oluşan kanalları **istediğiniz gibi** düzenleyebilirsiniz.\nLütfen kanal isimlerine **sayaç sayısı harici sayı koymayın!**\nBot, otomatik olarak sayıları o kanalda bulunan sayaç sayısına çevirir.\nEğer kanallarda sayılmasını istemediğiniz bir şey varsa, kanalı silebilirsiniz. \n*(Yanlışlıkla kanalı silerseniz tüm sayaç kanallarını silip tekrardan setup yapın!)*\n\n**Bu botun tüm source kodlarına https://github.com/im-Nac/sayac ile ulaşabilirsiniz.**`)
-    }
+    };
 
     if (command == "info") {
-        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **16:43**`)
-    }
+        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **17:17**\ninvite: <https://discord.com/api/oauth2/authorize?client_id=751168368836608099&permissions=16894160&scope=bot>`)
+    };
+
+    if (command == "help") {
+        let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
+        message.reply(`\nKomutlar:\n${guilds[message.guild.id].prefix}setup | ${guilds[message.guild.id].prefix}nasil | ${guilds[message.guild.id].prefix}info | ${guilds[message.guild.id].prefix}counter | ${guilds[message.guild.id].prefix}count`)
+    };
 
 });
 
