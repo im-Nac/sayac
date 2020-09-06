@@ -1,0 +1,44 @@
+{
+  "623596073688104970": {
+    "prefix": "s.",
+    "premium": "0",
+    "counter": false,
+    "owner": "618881069231374336",
+    "channels": {
+      "stats_category_id": "0",
+      "member_count_channel_id": "0",
+      "user_count_channel_id": "0",
+      "bot_count_channel_id": "0",
+      "channel_count_channel_id": "0",
+      "role_count_channel_id": "0"
+    },
+    "stats": {
+      "member_count": true,
+      "user_count": true,
+      "bot_count": true,
+      "channel_count": true,
+      "role_count": true
+    }
+  },
+  "751456957004513320": {
+    "prefix": "s.",
+    "premium": "0",
+    "counter": true,
+    "owner": "589493318791069709",
+    "channels": {
+      "stats_category_id": "0",
+      "member_count_channel_id": "0",
+      "user_count_channel_id": "0",
+      "bot_count_channel_id": "0",
+      "channel_count_channel_id": "0",
+      "role_count_channel_id": "0"
+    },
+    "stats": {
+      "member_count": true,
+      "user_count": true,
+      "bot_count": true,
+      "channel_count": true,
+      "role_count": true
+    }
+  }
+}
