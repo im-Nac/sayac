@@ -29,7 +29,7 @@ client.on('ready', async () => {
                 if (gr[r].stats.user_count) {
                     if (gr[r].channels.user_count_channel_id != "0") {
                         let name = client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).name;
-                        let newName = name.replace( /\d+/g, message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size);
+                        let newName = name.replace( /\d+/g, `${message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size}`);
                         if (newName != name) {
                             client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).setName(newName);
                         }
@@ -176,7 +176,7 @@ client.on('message', async (message) => {
             }
 
             if (guilds[message.guild.id].stats.user_count) {
-                let user_count = await message.guild.channels.create('Üye Sayısı: ' + message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size, { type: 'voice', reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let user_count = await message.guild.channels.create('Üye Sayısı: ' + `${message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size}`, { type: 'voice', reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 user_count.setParent(Category.id);
                 guilds[message.guild.id].channels.user_count_channel_id = user_count.id;
             }
