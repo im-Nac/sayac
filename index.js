@@ -137,7 +137,7 @@ client.on('message', async (message) => {
     const command = args.shift().toLowerCase();
     if (!message.content.startsWith(gds[message.guild.id].prefix) || message.author.bot || message.channel.type == "dm") return;
 
-    if (command === "prefix") {
+    if (command == "prefix") {
         if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
 
@@ -168,32 +168,33 @@ client.on('message', async (message) => {
             guilds[message.guild.id].channels.stats_category_id = Category.id;
             Category.setPosition(0)
 
-            if (guilds[message.guild.id].stats.member_count) {             
-                let member_count = await message.guild.channels.create('Kişi Sayısı: ' + message.guild.memberCount, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }, { id: client.user.id, allow: ['MANAGE_CHANNELS'] }], reason: "Kişi sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+            if (guilds[message.guild.id].stats.member_count) {
+                // permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }, { id: client.user.id, allow: ['MANAGE_CHANNELS'] }],
+                let member_count = await message.guild.channels.create('Kişi Sayısı: ' + message.guild.memberCount, { type: 'voice', reason: "Kişi sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 member_count.setParent(Category.id);
                 guilds[message.guild.id].channels.member_count_channel_id = member_count.id;
             }
 
             if (guilds[message.guild.id].stats.user_count) {
-                let user_count = await message.guild.channels.create('Üye Sayısı: ' + message.guild.members.cache.filter(m => !m.user.bot).size, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }], reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let user_count = await message.guild.channels.create('Üye Sayısı: ' + message.guild.members.cache.filter(m => !m.user.bot).size, { type: 'voice', reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 user_count.setParent(Category.id);
                 guilds[message.guild.id].channels.user_count_channel_id = user_count.id;
             }
             
             if (guilds[message.guild.id].stats.bot_count) { 
-                let bot_count = await message.guild.channels.create('Bot Sayısı: ' + message.guild.members.cache.filter(m => m.user.bot).size, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }], reason: "Bot sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let bot_count = await message.guild.channels.create('Bot Sayısı: ' + message.guild.members.cache.filter(m => m.user.bot).size, { type: 'voice', reason: "Bot sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 bot_count.setParent(Category.id);
                 guilds[message.guild.id].channels.bot_count_channel_id = bot_count.id;
             }
 
             if (guilds[message.guild.id].stats.channel_count) { 
-                let channel_count = await message.guild.channels.create('Kanal Sayısı: ' + message.guild.channels.cache.filter(c => c.type != 'category').size, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }], reason: "Kanal sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let channel_count = await message.guild.channels.create('Kanal Sayısı: ' + message.guild.channels.cache.filter(c => c.type != 'category').size, { type: 'voice', reason: "Kanal sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 channel_count.setParent(Category.id);
                 guilds[message.guild.id].channels.channel_count_channel_id = channel_count.id;
             }
 
             if (guilds[message.guild.id].stats.role_count) {
-                let role_count = await message.guild.channels.create('Rol Sayısı: ' + message.guild.roles.cache.filter(r => r.id != message.guild.id).size, { type: 'voice', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }], reason: "Rol sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let role_count = await message.guild.channels.create('Rol Sayısı: ' + message.guild.roles.cache.filter(r => r.id != message.guild.id).size, { type: 'voice', reason: "Rol sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 role_count.setParent(Category.id);
                 guilds[message.guild.id].channels.role_count_channel_id = role_count.id
             }
