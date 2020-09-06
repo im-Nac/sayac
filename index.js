@@ -8,7 +8,7 @@ client.on('ready', async () => {
 
     console.log("ready")
 
-    client.user.setPresence({ activity: { name: 'prelease version, 017' }, status: 'idle' });
+    client.user.setPresence({ activity: { name: 'prelease version, 018 | ' + client.guilds.cache.size + " sunucu" }, status: 'idle' });
 
     // Renaming session
     setInterval(async () => {
