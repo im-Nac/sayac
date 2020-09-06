@@ -9,7 +9,7 @@ client.on('ready', async () => {
     console.log("ready")
 
     setInterval(async () => {
-    client.user.setPresence({ activity: { name: 'sayaç - ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
+    client.user.setPresence({ activity: { name: 's.setup | ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
     }, 1000 * 20);
 
     // Renaming session
@@ -29,7 +29,7 @@ client.on('ready', async () => {
                 if (gr[r].stats.user_count) {
                     if (gr[r].channels.user_count_channel_id != "0") {
                         let name = client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).name;
-                        let newName = name.replace( /\d+/g, client.guilds.cache.get(r).members.cache.filter(m => !m.user.bot).size);
+                        let newName = name.replace( /\d+/g, message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size);
                         if (newName != name) {
                             client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).setName(newName);
                         }
@@ -176,7 +176,7 @@ client.on('message', async (message) => {
             }
 
             if (guilds[message.guild.id].stats.user_count) {
-                let user_count = await message.guild.channels.create('Üye Sayısı: ' + message.guild.members.cache.filter(m => !m.user.bot).size, { type: 'voice', reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
+                let user_count = await message.guild.channels.create('Üye Sayısı: ' + message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size, { type: 'voice', reason: "Üye sayısı adlı kanal, setup komudu ile oluşturulmuştur!"})
                 user_count.setParent(Category.id);
                 guilds[message.guild.id].channels.user_count_channel_id = user_count.id;
             }
@@ -247,7 +247,7 @@ client.on('message', async (message) => {
     };
 
     if (command == "info") {
-        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **17:17**\ninvite: <https://discord.com/api/oauth2/authorize?client_id=751168368836608099&permissions=16894160&scope=bot>`)
+        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **20:49**\ninvite: <https://discord.com/api/oauth2/authorize?client_id=751168368836608099&permissions=8&scope=bot>`)
     };
 
     if (command == "help") {
