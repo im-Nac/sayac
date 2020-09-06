@@ -8,8 +8,7 @@ client.on('ready', async () => {
 
     console.log("ready")
 
-    client.user.setPresence({ activity: { name: 'prelease version, 017' }, status: 'idle' }).then(console.log)
-    .catch(console.error);
+    client.user.setPresence({ activity: { name: 'prelease version, 017' }, status: 'idle' });
 
     // Renaming session
     setInterval(async () => {
@@ -18,16 +17,11 @@ client.on('ready', async () => {
             if (gr[r].channels.stats_category_id != "0") {
                 if (gr[r].stats.member_count) {
                     if (gr[r].channels.member_count_channel_id != "0") {
-                        try {
-                            let name = client.guilds.cache.get(r).channels.cache.get(gr[r].channels.member_count_channel_id).name;
-                            let newName = name.replace( /\d+/g, client.guilds.cache.get(r).memberCount);
-                            if (newName != name) {
-                                client.guilds.cache.get(r).channels.cache.get(gr[r].channels.member_count_channel_id).setName(newName);
-                            }
-                        } catch (e) {
-                            console.log(e);
+                        let name = client.guilds.cache.get(r).channels.cache.get(gr[r].channels.member_count_channel_id).name;
+                        let newName = name.replace( /\d+/g, client.guilds.cache.get(r).memberCount);
+                        if (newName != name) {
+                            client.guilds.cache.get(r).channels.cache.get(gr[r].channels.member_count_channel_id).setName(newName);
                         }
-
                     };
                 };
                 if (gr[r].stats.user_count) {
@@ -98,7 +92,7 @@ client.on('ready', async () => {
                     }
                 }
 
-                fs.writeFile("./guilds.json", JSON.stringify(g, null, 2), (err) => { });
+                fs.writeFile("./guilds.json", JSON.stringify(g), (err) => { });
         });
     }, 1000 * 30);
 });
@@ -129,11 +123,8 @@ client.on('guildCreate', async (guild) => {
                 role_count: true
             }
         }
-
-        fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });
+        fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });
     }
-
-    
 });
 
 client.on('message', async (message) => {
@@ -147,7 +138,7 @@ client.on('message', async (message) => {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (!args[0]) message.reply("\n:warning: Herhangi bir prefix belirtmedin. Lütfen tekrar dene.");
         guilds[message.guild.id].prefix = args.slice(0).join(" ");
-        fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });
+        fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });
         message.reply("\n:white_check_mark: Prefix, başarıyla **\`" + guilds[message.guild.id].prefix + "\`** olarak değişti!");
     };
 
@@ -208,7 +199,7 @@ client.on('message', async (message) => {
 
             guilds[message.guild.id].counter = true;
 
-            fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });
+            fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });
             message.reply("\n:white_check_mark: Setup başarıyla oluşturuldu!")
 
         };
@@ -216,27 +207,27 @@ client.on('message', async (message) => {
 
     if (command == "counter") {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
-        if (guilds[message.guild.id].counter == false) { guilds[message.guild.id].counter = true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); return message.reply("\n:white_check_mark: Counter başarıyla açılmıştır!");}
-        if (guilds[message.guild.id].counter == true) { guilds[message.guild.id].counter = false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); return message.reply("\n:x: Counter başarıyla kapatılmıştır!");}
+        if (guilds[message.guild.id].counter == false) { guilds[message.guild.id].counter = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Counter başarıyla açılmıştır!");}
+        if (guilds[message.guild.id].counter == true) { guilds[message.guild.id].counter = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Counter başarıyla kapatılmıştır!");}
     };
 
     if (command == "count") {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (args[0] == "member_count") {
-            if (guilds[message.guild.id].stats.member_count == true) { guilds[message.guild.id].stats.member_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:x: Member count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.member_count == false) { guilds[message.guild.id].stats.member_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:white_check_mark: Member count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.member_count == true) { guilds[message.guild.id].stats.member_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Member count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.member_count == false) { guilds[message.guild.id].stats.member_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Member count başarıyla açılmıştır!");}
         } else if (args[0] == "user_count") {
-            if (guilds[message.guild.id].stats.user_count == true) { guilds[message.guild.id].stats.user_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:x: User count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.user_count == false) { guilds[message.guild.id].stats.user_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:white_check_mark: User count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.user_count == true) { guilds[message.guild.id].stats.user_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: User count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.user_count == false) { guilds[message.guild.id].stats.user_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: User count başarıyla açılmıştır!");}
         } else if (args[0] == "bot_count") {
-            if (guilds[message.guild.id].stats.bot_count == true) { guilds[message.guild.id].stats.bot_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:x: Bot count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.bot_count == false) { guilds[message.guild.id].stats.bot_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:white_check_mark: Bot count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.bot_count == true) { guilds[message.guild.id].stats.bot_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Bot count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.bot_count == false) { guilds[message.guild.id].stats.bot_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Bot count başarıyla açılmıştır!");}
         } else if (args[0] == "channel_count") {
-            if (guilds[message.guild.id].stats.channel_count == true) { guilds[message.guild.id].stats.channel_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:x: Channel count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.channel_count == false) { guilds[message.guild.id].stats.channel_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:white_check_mark: Channel count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.channel_count == true) { guilds[message.guild.id].stats.channel_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Channel count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.channel_count == false) { guilds[message.guild.id].stats.channel_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Channel count başarıyla açılmıştır!");}
         } else if (args[0] == "role_count") {
-            if (guilds[message.guild.id].stats.role_count == true) { guilds[message.guild.id].stats.role_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:x: Role count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.role_count == false) { guilds[message.guild.id].stats.role_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { }); message.reply("\n:white_check_mark: Role count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.role_count == true) { guilds[message.guild.id].stats.role_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Role count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.role_count == false) { guilds[message.guild.id].stats.role_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Role count başarıyla açılmıştır!");}
         } else {
             message.reply("\n:grey_question: Belirtilen argümanla alakalı komut bulunamadı!");
         }
@@ -271,15 +262,15 @@ client.on('channelDelete', async (channel) => {
             }
         }
 
-        fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });
+        fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });
     };
 
-    if (guilds[channel.guild.id].channels.stats_category_id == channel.id) { guilds[channel.guild.id].channels.stats_category_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
-    if (guilds[channel.guild.id].channels.member_count_channel_id == channel.id) { guilds[channel.guild.id].channels.member_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
-    if (guilds[channel.guild.id].channels.user_count_channel_id == channel.id) { guilds[channel.guild.id].channels.user_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
-    if (guilds[channel.guild.id].channels.bot_count_channel_id == channel.id) { guilds[channel.guild.id].channels.bot_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
-    if (guilds[channel.guild.id].channels.channel_count_channel_id == channel.id) { guilds[channel.guild.id].channels.channel_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
-    if (guilds[channel.guild.id].channels.role_count_channel_id == channel.id) { guilds[channel.guild.id].channels.role_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds, null, 2), (err) => { });}
+    if (guilds[channel.guild.id].channels.stats_category_id == channel.id) { guilds[channel.guild.id].channels.stats_category_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
+    if (guilds[channel.guild.id].channels.member_count_channel_id == channel.id) { guilds[channel.guild.id].channels.member_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
+    if (guilds[channel.guild.id].channels.user_count_channel_id == channel.id) { guilds[channel.guild.id].channels.user_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
+    if (guilds[channel.guild.id].channels.bot_count_channel_id == channel.id) { guilds[channel.guild.id].channels.bot_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
+    if (guilds[channel.guild.id].channels.channel_count_channel_id == channel.id) { guilds[channel.guild.id].channels.channel_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
+    if (guilds[channel.guild.id].channels.role_count_channel_id == channel.id) { guilds[channel.guild.id].channels.role_count_channel_id = "0"; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { });}
     
 });
 

@@ -23,7 +23,7 @@
   "751456957004513320": {
     "prefix": "s.",
     "premium": "0",
-    "counter": true,
+    "counter": false,
     "owner": "589493318791069709",
     "channels": {
       "stats_category_id": "0",
