@@ -29,7 +29,7 @@ client.on('ready', async () => {
                 if (gr[r].stats.user_count) {
                     if (gr[r].channels.user_count_channel_id != "0") {
                         let name = client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).name;
-                        let newName = name.replace( /\d+/g, `${message.guild.memberCount - message.guild.members.cache.filter(m => m.user.bot).size}`);
+                        let newName = name.replace( /\d+/g, `${client.guilds.cache.get(r).memberCount - client.guilds.cache.get(r).members.cache.filter(m => m.user.bot).size}`);
                         if (newName != name) {
                             client.guilds.cache.get(r).channels.cache.get(gr[r].channels.user_count_channel_id).setName(newName);
                         }
