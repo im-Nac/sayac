@@ -8,7 +8,7 @@ client.on('ready', async () => {
 
     console.log("ready")
 
-    client.user.setPresence({ activity: { name: 'github.com/im-Nac/sayac | ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
+    client.user.setPresence({ activity: { name: 'sayaç - ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
 
     // Renaming session
     setInterval(async () => {
@@ -239,7 +239,11 @@ client.on('message', async (message) => {
 
     if (command == "nasıl" || command == "nasil") {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
-        message.reply(`\n:grey_question: **${guilds[message.guild.id].prefix}setup** komudu ile setup yapın.\nİşlem bittikten sonra oluşan kanalları **istediğiniz gibi** düzenleyebilirsiniz.\nLütfen kanal isimlerine **sayaç sayısı harici sayı koymayın!**\nBot, otomatik olarak sayıları o kanalda bulunan sayaç sayısına çevirir.\nEğer içinde sayılmasını istemediğiniz bir şey varsa, kanalı silebilirsiniz. (Yanlışlıkla kanalı silerseniz tüm sayaç kanallarını silip tekrardan setup yapın!)`)
+        message.reply(`\n:grey_question: **${guilds[message.guild.id].prefix}setup** komudu ile setup yapın.\nİşlem bittikten sonra oluşan kanalları **istediğiniz gibi** düzenleyebilirsiniz.\nLütfen kanal isimlerine **sayaç sayısı harici sayı koymayın!**\nBot, otomatik olarak sayıları o kanalda bulunan sayaç sayısına çevirir.\nEğer kanallarda sayılmasını istemediğiniz bir şey varsa, kanalı silebilirsiniz. \n*(Yanlışlıkla kanalı silerseniz tüm sayaç kanallarını silip tekrardan setup yapın!)*\n\n**Bu botun tüm source kodlarına https://github.com/im-Nac/sayac ile ulaşabilirsiniz.**`)
+    }
+
+    if (command == "info") {
+        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **16:43**`)
     }
 
 });
