@@ -8,7 +8,7 @@ client.on('ready', async () => {
 
     console.log("ready")
 
-    client.user.setPresence({ activity: { name: 'prelease version, 018 | ' + client.guilds.cache.size + " sunucu" }, status: 'idle' });
+    client.user.setPresence({ activity: { name: 'github.com/im-Nac/sayac | ' + client.guilds.cache.size + " sunucu" }, status: 'dnd' });
 
     // Renaming session
     setInterval(async () => {
@@ -135,6 +135,9 @@ client.on('message', async (message) => {
     if (!message.content.startsWith(gds[message.guild.id].prefix) || message.author.bot) return;
 
     if (command === "prefix") {
+        if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
+
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (!args[0]) message.reply("\n:warning: Herhangi bir prefix belirtmedin. Lütfen tekrar dene.");
         guilds[message.guild.id].prefix = args.slice(0).join(" ");
@@ -143,6 +146,9 @@ client.on('message', async (message) => {
     };
 
     if (command == "setup") {
+        if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
+        
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (guilds[message.guild.id].counter == false) return message.reply("\n:warning: Counter açık olmadığı için setup yapılamıyor! Açmak için: **\`" + guilds[message.guild.id].prefix + "counter\`**");
         
@@ -206,12 +212,18 @@ client.on('message', async (message) => {
     };
 
     if (command == "counter") {
+        if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
+
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (guilds[message.guild.id].counter == false) { guilds[message.guild.id].counter = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Counter başarıyla açılmıştır!");}
         if (guilds[message.guild.id].counter == true) { guilds[message.guild.id].counter = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Counter başarıyla kapatılmıştır!");}
     };
 
     if (command == "count") {
+        if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
+        
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (args[0] == "member_count") {
             if (guilds[message.guild.id].stats.member_count == true) { guilds[message.guild.id].stats.member_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Member count başarıyla kapatılmıştır!");}
