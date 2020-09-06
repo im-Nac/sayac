@@ -161,7 +161,6 @@ client.on('message', async (message) => {
 
         if (guilds[message.guild.id].premium == "0") {
 
-            console.log("Yeah i can log!")
             let Category = await message.guild.channels.create('📈 Üye Sayacı 📉', { type: 'category', permissionOverwrites: [{ id: message.guild.id, allow: ['VIEW_CHANNEL'], deny: ['CONNECT'] }, { id: client.user.id, allow: ['MANAGE_CHANNELS']}], reason: "Üye sayacı adlı kanal, setup komuduyla kurulmuştur!"})
             guilds[message.guild.id].channels.stats_category_id = Category.id;
             Category.setPosition(0)
