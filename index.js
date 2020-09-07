@@ -222,20 +222,20 @@ client.on('message', async (message) => {
         
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
         if (args[0] == "member_count") {
-            if (guilds[message.guild.id].stats.member_count == true) { guilds[message.guild.id].stats.member_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Member count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.member_count == false) { guilds[message.guild.id].stats.member_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Member count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.member_count == true) { guilds[message.guild.id].stats.member_count = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Member count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.member_count == false) { guilds[message.guild.id].stats.member_count = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Member count başarıyla açılmıştır!");}
         } else if (args[0] == "user_count") {
-            if (guilds[message.guild.id].stats.user_count == true) { guilds[message.guild.id].stats.user_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: User count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.user_count == false) { guilds[message.guild.id].stats.user_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: User count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.user_count == true) { guilds[message.guild.id].stats.user_count = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: User count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.user_count == false) { guilds[message.guild.id].stats.user_count = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: User count başarıyla açılmıştır!");}
         } else if (args[0] == "bot_count") {
-            if (guilds[message.guild.id].stats.bot_count == true) { guilds[message.guild.id].stats.bot_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Bot count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.bot_count == false) { guilds[message.guild.id].stats.bot_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Bot count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.bot_count == true) { guilds[message.guild.id].stats.bot_count = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Bot count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.bot_count == false) { guilds[message.guild.id].stats.bot_count = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Bot count başarıyla açılmıştır!");}
         } else if (args[0] == "channel_count") {
-            if (guilds[message.guild.id].stats.channel_count == true) { guilds[message.guild.id].stats.channel_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Channel count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.channel_count == false) { guilds[message.guild.id].stats.channel_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Channel count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.channel_count == true) { guilds[message.guild.id].stats.channel_count = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Channel count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.channel_count == false) { guilds[message.guild.id].stats.channel_count = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Channel count başarıyla açılmıştır!");}
         } else if (args[0] == "role_count") {
-            if (guilds[message.guild.id].stats.role_count == true) { guilds[message.guild.id].stats.role_count == false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:x: Role count başarıyla kapatılmıştır!");}
-            if (guilds[message.guild.id].stats.role_count == false) { guilds[message.guild.id].stats.role_count == true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); message.reply("\n:white_check_mark: Role count başarıyla açılmıştır!");}
+            if (guilds[message.guild.id].stats.role_count == true) { guilds[message.guild.id].stats.role_count = false; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:x: Role count başarıyla kapatılmıştır!");}
+            if (guilds[message.guild.id].stats.role_count == false) { guilds[message.guild.id].stats.role_count = true; fs.writeFile("./guilds.json", JSON.stringify(guilds), (err) => { }); return message.reply("\n:white_check_mark: Role count başarıyla açılmıştır!");}
         } else {
             message.reply("\n:grey_question: Belirtilen argümanla alakalı komut bulunamadı!");
         }
@@ -266,6 +266,9 @@ client.on('message', async (message) => {
         newChannel.send("\n:white_check_mark: Kanal başarıyla nukelenmiştir!").then(m => m.delete({timeout: 12000}))
     };
 
+    if (command == "newConfig") {
+        
+    };
 });
 
 client.on('channelDelete', async (channel) => {
