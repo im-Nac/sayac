@@ -247,12 +247,23 @@ client.on('message', async (message) => {
     };
 
     if (command == "info") {
-        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **20:49**\ninvite: <https://discord.com/api/oauth2/authorize?client_id=751168368836608099&permissions=8&scope=bot>`)
+        message.reply(`\nversiyon: **pr17** (prelease 17)\nyapımcı: **nac#0001**\nson güncelleme tarihi: **7.09.2020 13:27**\ninvite: <https://discord.com/api/oauth2/authorize?client_id=751168368836608099&permissions=8&scope=bot>`)
     };
 
     if (command == "help") {
         let guilds = JSON.parse(fs.readFileSync("./guilds.json", "utf8"));
-        message.reply(`\nKomutlar:\n${guilds[message.guild.id].prefix}setup | ${guilds[message.guild.id].prefix}nasil | ${guilds[message.guild.id].prefix}info | ${guilds[message.guild.id].prefix}counter | ${guilds[message.guild.id].prefix}count`)
+        message.reply(`\nKomutlar:\n${guilds[message.guild.id].prefix}setup | ${guilds[message.guild.id].prefix}nasil | ${guilds[message.guild.id].prefix}info | ${guilds[message.guild.id].prefix}counter | ${guilds[message.guild.id].prefix}count | ${guilds[message.guild.id].prefix}nuke`)
+    };
+
+    if (command == "nuke") {
+        if (!message.guild.me.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Kanalları editlemek için yetkim yok! Lütfen bana kanalları editleme yetkisini verin.");
+        if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.reply(":warning: Bu komutu kullanmak için kanalları ayarlama yetkinizin bulunması gerekmektedir!");
+   
+        let position = message.channel.position;
+        let newChannel = await message.channel.clone()
+        message.channel.delete();
+        newChannel.setPosition(position);
+        newChannel.send("\n:white_check_mark: Kanal başarıyla nukelenmiştir!").then(m => m.delete({timeout: 12000}))
     };
 
 });
